@@ -1,0 +1,90 @@
+.gil-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  display: none;
+  overflow: auto;
+  background: rgba(1, 4, 9, 0.88);
+  cursor: zoom-out;
+  overscroll-behavior: contain;
+}
+
+.gil-backdrop.gil-open-state {
+  display: flex;
+}
+
+/* margin:auto centers without clipping the top-left edge once the image overflows. */
+.gil-image {
+  margin: auto;
+  max-width: 95vw;
+  max-height: 92vh;
+  object-fit: contain;
+  cursor: zoom-in;
+  background: repeating-conic-gradient(#2d333b 0 25%, #22272e 0 50%) 0 0 / 16px 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+.gil-zoomed .gil-image {
+  max-width: none;
+  max-height: none;
+  cursor: zoom-out;
+}
+
+.gil-bar {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e6edf3;
+}
+
+.gil-open {
+  color: #e6edf3 !important;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.gil-close,
+.gil-nav {
+  border: 0;
+  border-radius: 6px;
+  background: rgba(110, 118, 129, 0.4);
+  color: #e6edf3;
+  cursor: pointer;
+}
+
+.gil-close {
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+}
+
+.gil-nav {
+  position: fixed;
+  top: 50%;
+  width: 44px;
+  height: 64px;
+  margin-top: -32px;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.gil-prev {
+  left: 12px;
+}
+
+.gil-next {
+  right: 12px;
+}
+
+.gil-close:hover,
+.gil-nav:hover {
+  background: rgba(110, 118, 129, 0.7);
+}
+
+.gil-single .gil-nav {
+  display: none;
+}

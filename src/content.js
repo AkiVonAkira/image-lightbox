@@ -88,7 +88,7 @@ function buildOverlay() {
       suppressClick = false;
       return;
     }
-    const t = e.target.closest(".gil-image, .gil-prev, .gil-next, .gil-open, .gil-pill") ?? e.target;
+    const t = e.target.closest(".gil-image, .gil-prev, .gil-next, .gil-pill") ?? e.target;
     if (t.classList.contains("gil-image")) return toggleZoom(e.clientX, e.clientY);
     if (t.classList.contains("gil-prev")) return step(-1);
     if (t.classList.contains("gil-next")) return step(1);
@@ -173,7 +173,11 @@ function onMouseMove(e) {
 }
 
 function onMouseUp() {
-  suppressClick = drag.moved;
+  // Swallow the click that ends a drag. Reset after it, in case the drag ended outside the window.
+  if (drag.moved) {
+    suppressClick = true;
+    setTimeout(() => (suppressClick = false));
+  }
   drag = null;
   overlay.classList.remove("gil-dragging");
   window.removeEventListener("mousemove", onMouseMove, true);

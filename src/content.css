@@ -20,12 +20,14 @@
   display: flex;
 }
 
-/* margin:auto centers without clipping the top-left edge once the image overflows. */
+/* margin:auto centers without clipping the top-left edge once the image overflows.
+   The max sizes fit the image until the script sets an explicit size (FIT_GUTTER * 2). */
 .gil-backdrop .gil-image {
   flex: none;
   margin: auto;
-  max-width: none;
-  max-height: none;
+  max-width: calc(100vw - 128px);
+  max-height: calc(100vh - 128px);
+  object-fit: contain;
   cursor: default;
   background: repeating-conic-gradient(#2d333b 0 25%, #22272e 0 50%) 0 0 / 16px 16px;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);

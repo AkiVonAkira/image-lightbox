@@ -15,7 +15,7 @@ const IMAGE_EXT = /\.(png|jpe?g|gif|webp|svg|bmp|avif|ico)$/i;
 const MARKDOWN = ".markdown-body";
 
 const FIT_GUTTER = 64; // px kept clear on each side for the bar and arrows
-const MAX_UPSCALE = 2; // small images grow to fit, but not past 2x their real size
+const MAX_UPSCALE = 1; // open at real size, shrunk to fit; click or wheel to zoom past it
 const CLICK_ZOOM = 2.5; // click zooms to this multiple of the fitted size (at least 1:1)
 const WHEEL_STEP = 1.2;
 const DRAG_SLOP = 4;
@@ -113,6 +113,7 @@ function computeFit() {
 function applyScale() {
   big.style.width = `${big.naturalWidth * scale}px`;
   big.style.height = `${big.naturalHeight * scale}px`;
+  big.style.maxWidth = big.style.maxHeight = "none";
   overlay.classList.toggle("gil-zoomed", scale > fitScale * 1.001);
   overlay.classList.toggle("gil-zoomable", maxScale() > fitScale * 1.001);
 }

@@ -2,7 +2,8 @@
 
 A Firefox/Zen extension. Clicking an image in a GitHub README, issue, PR, or comment opens it in an overlay on the same page instead of a new tab.
 
-- Click the image to toggle between fit-to-screen and full size (only when it is scaled down).
+- Images fill the screen, growing small ones up to 2x.
+- Click the image to zoom in at that point, and click again to fit. The mouse wheel zooms around the cursor, and you drag to pan.
 - `←` / `→` step through the other images on the page.
 - `Esc`, the ✕, or a click on the backdrop closes it.
 - Ctrl/Shift/middle-click still open the link as usual. "Open original" opens it in a new tab.

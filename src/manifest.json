@@ -1,20 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "GitHub Image Lightbox",
-  "version": "1.0.0",
-  "description": "Open images in GitHub markdown as an in-page lightbox instead of a new tab.",
+  "name": "Image Lightbox",
+  "version": "1.1.0",
+  "description": "Open images on supported sites in an in-page lightbox instead of a new tab.",
   "browser_specific_settings": {
     "gecko": {
       "id": "github-image-lightbox@akivonakira",
       "strict_min_version": "128.0"
     }
-  },
-  "content_scripts": [
-    {
-      "matches": ["https://github.com/*", "https://gist.github.com/*"],
-      "js": ["content.js"],
-      "css": ["content.css"],
-      "run_at": "document_start"
-    }
-  ]
+  }
 }

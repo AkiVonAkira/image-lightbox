@@ -2,6 +2,8 @@
 
 A Firefox extension (it also runs in Zen and other Firefox-based browsers). On supported sites, clicking an image opens it in an overlay on the same page instead of sending you to a new tab.
 
+![Clicking the screenshot in a GitHub README opens it in the lightbox, then click-zoom, drag to pan, click to fit, wheel zoom, and Esc to close](docs/demo.gif)
+
 - Images open at their real size, shrunk to fit the screen if needed.
 - Click the image to zoom in at that point, and click again to fit. The mouse wheel zooms around the cursor, and you drag to pan.
 - `←` / `→` step through the other images on the page.

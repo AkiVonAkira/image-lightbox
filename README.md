@@ -1,3 +1,4 @@
+[lightbox-demo-30fps.webm](https://github.com/user-attachments/assets/b60bcbc2-f99e-49d0-a028-184c62b16cbb)
 # Image Lightbox
 
 A Firefox extension (it also runs in Zen and other Firefox-based browsers). On supported sites, clicking an image opens it in an overlay on the same page instead of sending you to a new tab.

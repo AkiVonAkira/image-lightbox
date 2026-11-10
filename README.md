@@ -12,6 +12,7 @@ A Firefox extension (it also runs in Zen and other Firefox-based browsers). On s
 
 | Site | Hosts | What opens |
 | --- | --- | --- |
+| Cardmarket | `www.cardmarket.com`, `cardmarket.com` | Card images on product pages and in the gallery view of search and singles pages, and the camera icon in list views, wants lists, and the Shopping Wizard (it opens the image from its hover tooltip). Card images that another extension or userscript adds also open, and then the camera icon beside them steps aside. The expansion symbols under "Reprints" still link to that printing, and clicking a card's name still opens its page. Cardmarket serves one size per card (255×361 for Magic), so the lightbox opens that at real size; click or scroll to zoom. |
 | GitHub | `github.com`, `gist.github.com` | Linked images in READMEs, issues, pull requests, comments, and gists. Badges that link somewhere else (CI, crates.io, and so on), avatars, and emoji keep their normal behavior. |
 
 ## Install
@@ -42,7 +43,7 @@ The lightbox in `src/lightbox.js` knows nothing about any site. Each site is one
 (globalThis.imageLightboxSites ??= []).push({
   id: "example",
   hosts: ["example.com", "www.example.com"], // exact hostnames
-  candidates: "article img",                 // CSS selector for images that may open, in page order
+  candidates: "article img",                 // CSS selector for elements that may open, in page order
   accepts: (img) => !img.matches(".avatar, .emoji"), // false keeps the click as it is
   fullSize: (img) => img.currentSrc || img.src,      // URL shown in the overlay
   original: (img) => img.closest("a")?.href,         // "Open original" link; falls back to fullSize
@@ -50,7 +51,7 @@ The lightbox in `src/lightbox.js` knows nothing about any site. Each site is one
 });
 ```
 
-`src/sites/github.js` is a full example. The build loads every file in `src/sites/`, adds it to the content scripts before `lightbox.js`, and turns each adapter's `hosts` into the manifest's `content_scripts.matches`, so you do not edit `manifest.json`. Rebuild and load `dist/extension/manifest.json` as a temporary add-on to test.
+Candidates are usually `<img>`, but any element works: a click anywhere inside one opens it, and the gallery skips candidates that are not rendered. `src/sites/github.js` is a full example, and `src/sites/cardmarket.js` opens icons whose image is only in a tooltip. The build loads every file in `src/sites/`, adds it to the content scripts before `lightbox.js`, and turns each adapter's `hosts` into the manifest's `content_scripts.matches`, so you do not edit `manifest.json`. Rebuild and load `dist/extension/manifest.json` as a temporary add-on to test.
 
 ## License
 

@@ -1,8 +1,9 @@
 "use strict";
 
 // The lightbox core. It knows nothing about any site: the adapter in src/sites/ that
-// matches this hostname says which images open and which URLs to use. A plain left click
-// on an accepted image shows it in an overlay instead of following its link.
+// matches this hostname says which elements open and which URLs to use. A plain left click
+// on an accepted element (usually an <img>) shows its image in an overlay instead of following
+// its link.
 
 (() => {
   const site = (globalThis.imageLightboxSites ?? []).find((s) => s.hosts.includes(location.hostname));
@@ -163,7 +164,7 @@
     overlay.classList.remove("gil-zoomed", "gil-zoomable");
     big.removeAttribute("style");
     big.src = site.fullSize(img);
-    big.alt = img.alt || "";
+    big.alt = img.getAttribute("alt") || "";
     if (big.complete) fit();
     overlay.querySelector(".gil-open").href = site.original(img) || big.src;
     overlay.querySelector(".gil-count").textContent = `${index + 1} / ${gallery.length}`;
@@ -202,11 +203,13 @@
     "click",
     (e) => {
       if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
-      const img = e.target instanceof Element ? e.target.closest("img") : null;
-      if (!img || img.classList.contains("gil-image") || !site.accepts(img)) return;
+      const el = e.target instanceof Element ? e.target.closest(site.candidates) : null;
+      if (!el || el.closest(".gil-backdrop") || !site.accepts(el)) return;
+      // Content scripts register at document_start, before page scripts and userscripts, so
+      // stopping immediate propagation keeps their own click handlers (and lightboxes) out.
       e.preventDefault();
-      e.stopPropagation();
-      open(img);
+      e.stopImmediatePropagation();
+      open(el);
     },
     true,
   );
@@ -220,7 +223,7 @@
       else if (e.key === "ArrowRight") step(1);
       else return;
       e.preventDefault();
-      e.stopPropagation();
+      e.stopImmediatePropagation();
     },
     true,
   );

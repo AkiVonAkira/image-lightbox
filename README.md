@@ -22,7 +22,7 @@ A Firefox extension (it also runs in Zen and other Firefox-based browsers). On s
 The extension is not on addons.mozilla.org, so the `.xpi` is unsigned. Firefox Developer Edition, Nightly, ESR, and Zen can install unsigned add-ons. Release and Beta Firefox ignore the setting below, so there you can only load it as a temporary add-on.
 
 1. Set `xpinstall.signatures.required` to `false` in `about:config`.
-2. Download `image-lightbox.xpi` from the [latest release](https://github.com/AkiVonAkira/image-lightbox/releases/latest), or build it from source (below).
+2. Download `image-lightbox.xpi` from the [latest release](https://github.com/kayzel-forge/image-lightbox/releases/latest), or build it from source (below).
 3. Open the `.xpi` in the browser (drag it into a window, or about:addons, gear menu, **Install Add-on From File**) and click **Add**.
 
 To try it without installing, open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on**, and pick `dist/extension/manifest.json` from a source build. It stays until the browser restarts.

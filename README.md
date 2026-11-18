@@ -35,7 +35,11 @@ Needs [Bun](https://bun.sh).
 bun scripts/build.ts
 ```
 
-This writes `dist/extension/` (the unpacked extension) and `dist/image-lightbox.xpi`. To update an installed copy, bump `version` in `src/manifest.json`, rebuild, and install the new `.xpi` over the old one.
+This writes `dist/extension/` (the unpacked extension) and `dist/image-lightbox.xpi`. To update an installed copy, install the newer `.xpi` over the old one.
+
+## Release
+
+Bump `version` in `src/manifest.json` and push to `main`. The `Release` workflow builds the `.xpi` and publishes it as release `v<version>`. It skips versions that already have a release.
 
 ## Adding a site
 

@@ -1,0 +1,50 @@
+name: Release
+
+# Publishes dist/image-lightbox.xpi as release v<version> when main has a manifest
+# version that has no release yet. Bump the version in src/manifest.json to ship.
+# The repo is public, so this runs on GitHub-hosted runners, not the homelab pool.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Install bsdtar
+        run: command -v bsdtar || (sudo apt-get update -qq && sudo apt-get install -y -qq libarchive-tools)
+      - name: Build
+        run: bun scripts/build.ts
+      - name: Read version
+        id: version
+        run: echo "tag=v$(jq -r .version src/manifest.json)" >> "$GITHUB_OUTPUT"
+      - name: Check for an existing release
+        id: exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            echo "${{ steps.version.outputs.tag }} is already released; bump src/manifest.json to ship."
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Publish release
+        if: steps.exists.outputs.found == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" dist/image-lightbox.xpi \
+            --target "${{ github.sha }}" \
+            --title "${{ steps.version.outputs.tag }}" \
+            --generate-notes
